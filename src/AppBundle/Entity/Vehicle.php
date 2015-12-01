@@ -19,10 +19,32 @@ class Vehicle
     /**
      * @ORM\Column(type="string")
      */
-    public $offerTitle;
+    private $offerTitle;
 
     /**
      * @ORM\Column(type="decimal")
      */
-    public $price;
+    private $price;
+
+    public function __construct($offerTitle, $price)
+    {
+        $this->offerTitle = $offerTitle;
+        $this->price = $price;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOfferTitle()
+    {
+        return $this->offerTitle;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
 }
