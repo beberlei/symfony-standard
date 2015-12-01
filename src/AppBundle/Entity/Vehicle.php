@@ -26,6 +26,16 @@ class Vehicle
      */
     private $price;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Brand")
+     */
+    public $brand;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Details", mappedBy="vehicle")
+     */
+    public $details;
+
     public function __construct($offerTitle, $price)
     {
         $this->offerTitle = $offerTitle;

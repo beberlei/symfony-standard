@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use AppBundle\Entity\Vehicle;
+use AppBundle\Entity\Brand;
 
 class VehicleController extends Controller
 {
@@ -24,7 +25,14 @@ class VehicleController extends Controller
 
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
 
-        $metadata = $entityManager->getClassMetadata(Vehicle::class);
+        $brand = $entityManager->getRepository(Brand::class)->findOneBy(['name' => 'AUDI']);
+        if (!$brand) {
+            $brand = new Brand();
+            $brand->name = 'AUDI';
+            $entityManager->persist($brand);
+        }
+
+        $vehicle->brand = $brand;
 
         $entityManager->persist($vehicle);
         $entityManager->flush();
