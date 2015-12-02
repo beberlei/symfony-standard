@@ -48,7 +48,15 @@ class VehicleController extends Controller
     {
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
 
-        $vehicle = $entityManager->find(Vehicle::class, $id);
+        $dql = "SELECT v, b, d
+                 FROM \AppBundle\Entity\Vehicle v 
+                 JOIN v.brand b
+                 LEFT JOIN v.details d
+                 WHERE v.id = ?1";
+        $vehicle = $entityManager->createQuery($dql)
+            ->setParameter(1, $id)
+            ->getSingleResult();
+        #$vehicle = $entityManager->find(Vehicle::class, $id);
 
         /*$repository = $entityManager->getRepository(Vehicle::class);
         $vehicle2 = $repository->findOneBy(['id' => $id]);

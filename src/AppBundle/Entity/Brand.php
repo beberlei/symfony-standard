@@ -20,4 +20,9 @@ class Brand
      * @ORM\Column(type="string")
      */
     public $name;
+
+    public function getName()
+    {
+        return $this->name;
+    }
 }

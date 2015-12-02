@@ -27,7 +27,7 @@ class Vehicle
     private $price;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Brand")
+     * @ORM\ManyToOne(targetEntity="Brand", fetch="EAGER")
      */
     public $brand;
 
