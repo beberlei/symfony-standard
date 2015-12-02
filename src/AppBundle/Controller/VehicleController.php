@@ -20,9 +20,7 @@ class VehicleController extends Controller
      */
     public function createAction()
     {
-        $vehicle = new Vehicle();
-        $vehicle->offerTitle = "AUDI A4";
-        $vehicle->price = 12000;
+        $vehicle = new Vehicle("AUDI A4", 12000);
 
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
         $entityManager->persist($vehicle);
@@ -30,6 +28,23 @@ class VehicleController extends Controller
         $entityManager->flush();
 
         return new Response('ID: ' . $vehicle->id . '</body>');
+    }
+
+    /**
+     * @Route("/vehicle/{id}")
+     * @Template
+     */
+    public function showAction($id)
+    {
+        $entityManager = $this->get('doctrine.orm.default_entity_manager');
+
+        $vehicle = $entityManager->find(Vehicle::class, $id);
+
+        $vehicle2 = $entityManager->getRepository(Vehicle::class)->findOneBy(['id' => $id]);
+
+        var_dump($vehicle === $vehicle2);
+
+        return ['vehicle' => $vehicle];
     }
 }
 
